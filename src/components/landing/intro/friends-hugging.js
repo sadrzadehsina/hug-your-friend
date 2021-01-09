@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import image1 from './images/1.jpg';
 import image2 from './images/2.jpg';
@@ -30,6 +31,8 @@ let timeout = null;
 
 const FriendsHugging = () => {
 
+	const history = useHistory();
+
 	const [times, setTimes] = useState(0);
 
 	const [image, setImage] = useState(image1);
@@ -43,9 +46,10 @@ const FriendsHugging = () => {
 
 		if (times === 50) {
 			timeout = setTimeout(() => setImage(imagefinal), 250);
+			setTimeout(() => history.push('/landing/signin'), 3000);
 		} else {
 			timeout = setTimeout(pickImage, 150);
-		}
+		};
 
 		return () => clearTimeout(timeout);
 

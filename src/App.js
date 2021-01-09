@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { AccountLayout, DashboardLayout } from '@Layouts';
-import { Landing } from '@Components/landing';
+import { LandingLayout, DashboardLayout } from '@Layouts';
+import { Intro, SignIn } from '@Components/landing';
 import { Hugs } from '@Components/dashboard';
 
 export default function App() {
@@ -8,6 +8,15 @@ export default function App() {
   return (
     <Router>
       <Switch>
+
+        <Route path="/landing/:path?" exact>
+          <LandingLayout>
+            <Switch>
+              <Route path="/landing/intro" component={Intro} />
+              <Route path="/landing/signin" component={SignIn} />
+            </Switch>
+          </LandingLayout>
+        </Route>
 
         <Route path="/dashboard/:path?" exact>
           <DashboardLayout>
@@ -17,7 +26,7 @@ export default function App() {
           </DashboardLayout>
         </Route>
 
-        <Route path="/" component={Landing} />
+        <Redirect to="/landing/intro" />
 
       </Switch>
     </Router>
