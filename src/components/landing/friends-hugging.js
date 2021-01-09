@@ -26,6 +26,8 @@ const images = [
 
 const pickRandomImage = randomNoRepeats(images);
 
+let timeout = null;
+
 const FriendsHugging = () => {
 
 	const [times, setTimes] = useState(0);
@@ -39,12 +41,11 @@ const FriendsHugging = () => {
 
 	useEffect(() => {
 
-		if (times === 100) {
-			setImage(imagefinal);
-			return;
+		if (times === 50) {
+			timeout = setTimeout(() => setImage(imagefinal), 250);
+		} else {
+			timeout = setTimeout(pickImage, 150);
 		}
-
-		const timeout = setTimeout(pickImage, 150);
 
 		return () => clearTimeout(timeout);
 
