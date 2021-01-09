@@ -7,7 +7,7 @@ import image4 from './images/4.jpg';
 import image5 from './images/5.jpg';
 import image6 from './images/6.jpg';
 import image7 from './images/7.jpg';
-import imagefinal from './images/final.png';
+import imagefinal from './images/final.jpg';
 
 const randomNoRepeats = array => {
 	let copy = array.slice(0);
@@ -44,7 +44,7 @@ const FriendsHugging = () => {
 			return;
 		}
 
-		const timeout = setTimeout(pickImage, 200);
+		const timeout = setTimeout(pickImage, 150);
 
 		return () => clearTimeout(timeout);
 
