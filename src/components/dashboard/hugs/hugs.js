@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { HugsView } from './view';
 
 const Hugs = () => {
 
-	const [open, setOpen] = useState(false);
+	const [loveDialogOpen, setLoveDialogOpen] = useState(false);
+	
+	const openLoveDialog = () => setLoveDialogOpen(true);
+	const closeLoveDialog = () => setLoveDialogOpen(false);
 
-	const heartClick = () => setOpen(true);
-
-	const handleClose = () => {
-    setOpen(false);
-  };
-
-	return <HugsView open={open} heartClick={heartClick} handleClose={handleClose} />;
+	return (
+		<HugsView
+			loveDialogOpen={loveDialogOpen}
+			openLoveDialog={openLoveDialog}
+			closeLoveDialog={closeLoveDialog}
+		/>
+	);
 
 };
 
