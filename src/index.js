@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import WebFont from 'webfontloader';
-
 import { ThemeProvider } from '@material-ui/styles';
-
 import {
   CssBaseline,
   createMuiTheme,
 } from '@material-ui/core';
+
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
 import { ToastsProvider } from '@Lib/toasts';
 import { FirebaseProvider } from '@Lib/firebase';
@@ -27,28 +26,10 @@ const theme = createMuiTheme({
     white: { ligth: '#F8F8F8', main: '#EEEEEE', dark: '#AAAAAA' },
     black: { main: '#0B0C09' }
   },
-  typography: {
-    fontFamily: [
-      'Titillium Web',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-  },
+  typography: { fontFamily: 'Titillium Web' },
 });
 
-WebFont.load({
-  google: {
-    families: ['Titillium Web']
-  }
-});
+WebFont.load({ google: { families: ['Titillium Web'] } });
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

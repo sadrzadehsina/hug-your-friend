@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TracksView } from './view';
+import { HugsView } from './view';
 
-const Tracks = () => {
+const Hugs = () => {
 
 	const [open, setOpen] = useState(false);
 
@@ -12,8 +12,8 @@ const Tracks = () => {
     setOpen(false);
   };
 
-	return <TracksView open={open} heartClick={heartClick} handleClose={handleClose} />;
+	return <HugsView open={open} heartClick={heartClick} handleClose={handleClose} />;
 
 };
 
-export { Tracks };
+export { Hugs };
