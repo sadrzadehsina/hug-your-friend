@@ -1,7 +1,9 @@
+import { createRef, useEffect } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import { LoveDialog } from './love-dialog';
 
@@ -17,13 +19,19 @@ const useStyles = makeStyles((theme) => ({
   text: {
     color: theme.palette.white.main
   },
+  report: {
+    padding: theme.spacing(0, 0, 2, 0)
+  },
 }));
 
 const HugsView = ({
+  user,
   loveDialogOpen,
   openLoveDialog,
-  closeLoveDialog
+  closeLoveDialog,
+  saveHugs
 }) => {
+
   const classes = useStyles();
 
   return (
@@ -38,17 +46,24 @@ const HugsView = ({
           className={classes.root}
           style={{ minHeight: '100%' }}
         >
-          <Grid item md="6">
-            <Typography variant="h2" color="white" className={classes.text} gutterBottom>Dear Sina</Typography>
-            <Typography variant="body1" color="white" className={classes.text}>
-              The good news is, you have earned <strong>156</strong><FavoriteIcon color="primary" /> so far in January.
-            </Typography>
-            <Typography variant="body1" color="white" className={classes.text} gutterBottom>
-              Everything is friendship, you can earn it or spread it as you go.
-            </Typography>
-            <Typography variant="body1" color="white" className={classes.text}>
-              Show others your love...
-            </Typography>
+          <Grid item style={{ width: '60%' }}>
+            <Typography variant="h2" className={classes.text} gutterBottom>Dear {user.displayName}</Typography>
+            <div className={classes.report}>
+              <Typography variant="body1" className={classes.text}>
+                The good news is, you have earned <strong>{user.hugsEarned}</strong><FavoriteIcon color="primary" /> so far.
+              </Typography>
+              <Typography variant="body1" className={classes.text}>
+                You have spread your love by giving <strong>{user.hugsGiven}</strong><FavoriteIcon color="primary" /> in January. 
+              </Typography>
+              <Typography variant="body1" className={classes.text} gutterBottom>
+                You still have <strong>{user.hugsRemained}</strong><FavoriteIcon color="primary" /> loves to spread in this month.
+              </Typography>
+            </div>
+            <div className={classes.motivation}>
+              <Typography variant="h6" className={classes.text}>
+                Everything is friendship, you can earn it or spread it as you go.
+              </Typography>
+            </div>
           </Grid>
         </Grid>
       </Grid>
@@ -69,7 +84,7 @@ const HugsView = ({
           </Grid>
         </a>
       </Grid>
-      <LoveDialog open={loveDialogOpen} close={closeLoveDialog} />
+      <LoveDialog open={loveDialogOpen} close={closeLoveDialog} save={saveHugs} />
     </>
   );
 };

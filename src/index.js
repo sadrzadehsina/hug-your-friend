@@ -20,7 +20,7 @@ const theme = createMuiTheme({
     primary: { main: '#FB2839' },
     secondary: { main: '#FFEFD6' },
     success: { main: '#679E1A' },
-    error: { main: '#FB120E' },
+    error: { main: '#FB2839' },
     warning: { main: '#FB120E' },
     info: { main: '#0B0C09' },
     white: { ligth: '#F8F8F8', main: '#EEEEEE', dark: '#AAAAAA' },

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import { Friend } from './friend';
+
+import { useFirestore, useUser } from '@Lib/firebase';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -28,9 +30,45 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const LoveDialog = ({ open, close }) => {
+const LoveDialog = ({ open, close, save }) => {
 
   const classes = useStyles();
+
+  const [users, setUsers] = useState([]);
+
+  const [userHugs, setUserHugs] = useState([]);
+
+  const firestore = useFirestore();
+  
+  const currentUser = useUser();
+
+  useEffect(() => {
+
+    if (!currentUser.uid) return;
+
+    firestore
+      .collection('users')
+      .get()
+      .then(response => {
+
+        const users = response.docs.map(d => d.data()).filter(user => user.uid !== currentUser.uid);
+
+        setUsers(users);
+
+      });
+
+  }, [currentUser]);
+
+  const onUpdate = ({ uid, hugs, hugsEarned, hugsGiven, hugsRemained }) => {
+    const data = [...userHugs];
+    const user = data.find(user => user.uid === uid);
+
+    if (user) user.hugs = hugs;
+    else data.push({ uid, hugs, hugsEarned, hugsGiven, hugsRemained });
+
+    setUserHugs(data.filter(user => user.hugs != 0));
+  };
+
 
   return (
     <Dialog
@@ -52,16 +90,12 @@ const LoveDialog = ({ open, close }) => {
           <Typography variant="h6" className={classes.title}>
             Show Your Love
           </Typography>
-          <Button autoFocus color="inherit" onClick={close}>
+          <Button autoFocus color="inherit" onClick={() => save(userHugs)}>
             save
           </Button>
         </Toolbar>
       </AppBar>
-      <List>
-        <Friend />
-        <Divider />
-        <Friend />
-      </List>
+      <List>{users.map(user => <Friend {...user} onUpdate={onUpdate} currentUser={currentUser} />)}</List>
     </Dialog>
   );
 };
